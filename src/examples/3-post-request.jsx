@@ -6,8 +6,14 @@ const PostRequest = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+	const handleSubmit = async (event) => {
+		event.preventDefault();
+		try {
+			const { data } = await axios.post(URL, { name, email });
+			console.log(data);
+		} catch (error) {
+			console.log(error.response);
+		}
 		console.log(name, email);
 	};
 
@@ -24,7 +30,7 @@ const PostRequest = () => {
 						className='form-input'
 						id='name'
 						value={name}
-						onChange={(e) => setName(e.target.value)}
+						onChange={(event) => setName(event.target.value)}
 					/>
 				</div>
 				<div className='form-row'>
@@ -36,7 +42,7 @@ const PostRequest = () => {
 						className='form-input'
 						id='email'
 						value={email}
-						onChange={(e) => setEmail(e.target.value)}
+						onChange={(event) => setEmail(event.target.value)}
 					/>
 				</div>
 				<button type='submit' className='btn btn-block'>
