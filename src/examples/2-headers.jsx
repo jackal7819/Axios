@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const URL = 'https://icanhazdadjoke.com/';
@@ -8,8 +8,19 @@ const Headers = () => {
 	const [joke, setJoke] = useState('random dad joke');
 
 	const fetchDadJoke = async () => {
-		console.log('fetch dad joke');
+		try {
+			const { data } = await axios.get(URL, {
+				headers: { Accept: 'application/json' },
+			});
+			setJoke(data.joke);
+		} catch (error) {
+			console.log(error.response);
+		}
 	};
+
+	useEffect(() => {
+		fetchDadJoke();
+	}, []);
 
 	return (
 		<section className='text-center section'>
